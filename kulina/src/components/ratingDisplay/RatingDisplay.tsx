@@ -1,8 +1,8 @@
 import React, { CSSProperties } from 'react';
 import './RatingDisplay.scss';
-import starActiveIcon from '../../../assets/images/star-active.png';
+import starActiveIcon from '../../assets/images/star-active.png';
 import yellowStarActiveIcon from '../../../assets/images/yellow-star-active.png';
-import starIcon from '../../../assets/images/star.png';
+import starIcon from '../../assets/images/star.png';
 
 interface RatingDisplayProps {
     rating: number | string;
@@ -17,6 +17,13 @@ const RatingDisplay = (Props: RatingDisplayProps) => {
 
   return (
     <div className='rating'>
+    {withNumber ? (
+      <span className="number" style={fontStyles}>
+        {rating}
+      </span>
+    ) : (
+      ''
+    )}
       <img
         alt='share'
         src={rating < 1 ? starIcon : starActiveIcon}
@@ -47,13 +54,6 @@ const RatingDisplay = (Props: RatingDisplayProps) => {
         className='star'
         style={starStyles}
       />
-      {withNumber ? (
-        <span className="number" style={fontStyles}>
-          ({rating})
-        </span>
-      ) : (
-        ''
-      )}
     </div>
   );
 };
