@@ -34,7 +34,18 @@ const AddressModal: FC<AddressModalProps> = (props) => {
                     <SearchBar value={search} onChange={onChange}/>
                 </div>
                 <div className="address-list">
-                {address
+                {search.length < 4 ?
+                    address.map(item =>(
+                        <div className="list-item" onClick={() => selectPlace(item.location_name)}>
+                            <img alt='search' src={place} />
+                            <div className="list-name">
+                                <h1>{item.location_name}</h1>
+                                <p>{item.location_street}</p>
+                            </div>
+                        </div> 
+                    ))
+                :
+                address
                     .filter(item => {
                         if (!search) return true
                         if (item.location_name.toLowerCase().includes(search) || item.location_street.toLowerCase().includes(search)) {
