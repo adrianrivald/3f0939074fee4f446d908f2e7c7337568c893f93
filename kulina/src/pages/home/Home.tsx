@@ -15,7 +15,7 @@ import Rating from '@material-ui/core/Rating';
 
 interface dateProps {
     changeTabs: number | undefined;
-    }
+}
 
 function Home()  {
     const [lunchFood, setLunchFood] = useState([] as foodListDataProps[])
@@ -24,14 +24,12 @@ function Home()  {
     const location = useLocation();
     const changeTab =
       location.state && (location.state as dateProps).changeTabs;
-    console.log('tab', changeTab);
     const [toggleCart, setToggleCart] = useState(false)
     const [toggleAddress, setToggleAddress] = useState(false)
     const [amount, setAmount] = useState(0);
     const [search, setSearch] = useState('');
     const [price, setPrice] = useState(0);
     const [selectedPlace, setSelectedPlace] = useState('')
-
 
     useEffect(()=> {
         setLunchFood(lunchListData);
@@ -64,10 +62,6 @@ function Home()  {
         e.preventDefault();
         const { value } = e.target;
         setSearch(value)
-        if (value.length > 3) {
-
-        }
-        console.log(value,'value')
     }
 
     const selectPlace = (place: string) => {
@@ -123,10 +117,11 @@ function Home()  {
 
     return (
         <div className="home">
+            {/* meta */}
             <meta name="viewport"
-                content="width=device-width, initial-scale=1">
-                    
+                content="width=device-width, initial-scale=1">  
             </meta>
+            {/* Header section */}
             <Header>
                 <BackArrow src={backArrow} onClick={showAddress} alt="back"/>
                 <AddressChoice>
@@ -139,6 +134,9 @@ function Home()  {
                     </AddressData>
                 </AddressChoice>
             </Header>
+            {/* Header section */}
+
+            {/* Date picker */}
             <div className="date-container">
                 <Tabs>
                     <TabList className="menu-bar">
@@ -283,6 +281,8 @@ function Home()  {
                             </div>
                         </Tab>
                     </TabList>
+
+                    {/* Food item list */}
                     <TabPanel className="tab-content">
                         <Tabs>
                             <TabList className="time-bar">
@@ -653,17 +653,14 @@ function Home()  {
                             </TabPanel>
                         </Tabs>
                     </TabPanel>
-                    <TabPanel>
-                        x
-                    </TabPanel>
-                    <TabPanel>
-                        x
-                    </TabPanel>
-                    <TabPanel>
-                        x
-                    </TabPanel>
+                    {/* Food item list */}
+
                 </Tabs>
+                {/* Date picker */}
+
             </div>
+
+            {/* Address Modal */}
             <AddressModal
                 popupHandler={showAddress}
                 action={toggleAddress}
@@ -672,6 +669,8 @@ function Home()  {
                 onChange={onChange}
                 selectPlace={selectPlace}
             />
+
+            {/* Cart Modal */}
             {cartModal() }
         </div>
     );
