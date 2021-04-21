@@ -168,6 +168,13 @@
                                         border-radius: 5px;
                                     }
                                 }
+                                .rating {
+                                    display: flex;
+                                    align-items: center;
+                                    .rating-value {
+                                        font-size: 12px;
+                                    }
+                                }
                             }
                         }
                     }

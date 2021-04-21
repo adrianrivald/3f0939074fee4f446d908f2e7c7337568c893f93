@@ -11,6 +11,7 @@ import { locationListData, locationListDataProps } from '../../helpers/locationL
 import AddressModal from '../../components/addressModal/AddressModal';
 import backArrow from '../../assets/images/back-arrow.svg'
 import styled from 'styled-components';
+import Rating from '@material-ui/core/Rating';
 
 interface dateProps {
     changeTabs: number | undefined;
