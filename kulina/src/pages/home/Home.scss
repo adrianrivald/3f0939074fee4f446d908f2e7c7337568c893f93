@@ -2,25 +2,6 @@
     display: block;
     padding: 16px;
 
-    .header {
-        display: flex;
-        align-items: center;
-        .address-choice {
-            margin-left: 15px;
-            h2 {
-                color: #6e7679;
-                font-size: 10px;
-                margin: 0;
-            }
-            .address {
-                font-size: 14px;
-                cursor: pointer;
-            }
-        }
-        img {
-            width: 30px;
-        }
-    }
     .date-container {
         display: block;
         .menu-bar{

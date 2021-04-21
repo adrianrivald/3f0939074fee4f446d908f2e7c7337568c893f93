@@ -4,19 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import './Home.scss';
 import { useLocation } from 'react-router-dom';
-import { productListData, productListDataProps } from '../../helpers/productListData';
+import { lunchListData, dinnerListData, foodListDataProps } from '../../helpers/productListData';
 import RatingDisplay from '../../components/ratingDisplay/RatingDisplay';
 import { priceToRupiah } from '../../helpers/priceToRupiah';
 import { locationListData, locationListDataProps } from '../../helpers/locationListData';
 import AddressModal from '../../components/addressModal/AddressModal';
 import backArrow from '../../assets/images/back-arrow.svg'
+import styled from 'styled-components';
 
 interface dateProps {
     changeTabs: number | undefined;
     }
 
 function Home()  {
-    const [product,setProduct] = useState([] as productListDataProps[])
+    const [lunchFood, setLunchFood] = useState([] as foodListDataProps[])
+    const [dinnerFood, setDinnerFood] = useState([] as foodListDataProps[])
     const [address, setAddress] = useState([] as locationListDataProps[])
     const location = useLocation();
     const changeTab =
@@ -31,7 +33,8 @@ function Home()  {
 
 
     useEffect(()=> {
-        setProduct(productListData);
+        setLunchFood(lunchListData);
+        setDinnerFood(dinnerListData);
         setAddress(locationListData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
@@ -90,24 +93,51 @@ function Home()  {
         width: '10px'
     }
 
+    //Styled-components styling
+
+    //Header
+    const Header = styled.div`
+        display: flex;
+        align-items: center;
+    `;
+
+    const BackArrow = styled.img`
+        width: 30px;
+    `;
+
+    const AddressTitleSection = styled.h2`
+        color: #6e7679;
+        font-size: 10px;
+        margin: 0;
+    `;
+
+    const AddressData = styled.span`
+        font-size: 14px;
+        cursor: pointer;
+    `;
+
+    const AddressChoice = styled.div`
+        margin-left: 15px;
+    `;
+
     return (
         <div className="home">
             <meta name="viewport"
                 content="width=device-width, initial-scale=1">
                     
             </meta>
-            <div className="header">
-                <img src={backArrow} onClick={showAddress} alt="back"/>
-                <div className="address-choice">
-                    <h2>Alamat Pengantaran</h2>
-                    <span className="address" onClick={showAddress}>
+            <Header>
+                <BackArrow src={backArrow} onClick={showAddress} alt="back"/>
+                <AddressChoice>
+                    <AddressTitleSection>Alamat Pengantaran</AddressTitleSection>
+                    <AddressData onClick={showAddress}>
                         {
                             selectedPlace === '' ? 'Tokopedia Tower' : selectedPlace
                         }
                     <FontAwesomeIcon icon={faAngleDown} style={{marginLeft: '10px', color:'#f9234a', cursor:'pointer'}} />
-                    </span>
-                </div>
-            </div>
+                    </AddressData>
+                </AddressChoice>
+            </Header>
             <div className="date-container">
                 <Tabs>
                     <TabList className="menu-bar">
@@ -269,7 +299,7 @@ function Home()  {
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            lunchFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
@@ -300,7 +330,7 @@ function Home()  {
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            dinnerFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
@@ -343,7 +373,7 @@ function Home()  {
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            lunchFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
@@ -374,7 +404,7 @@ function Home()  {
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            dinnerFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
@@ -417,7 +447,7 @@ function Home()  {
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            lunchFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
@@ -448,7 +478,7 @@ function Home()  {
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            dinnerFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
@@ -491,7 +521,7 @@ function Home()  {
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            lunchFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
@@ -522,7 +552,7 @@ function Home()  {
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            dinnerFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
@@ -561,11 +591,11 @@ function Home()  {
                             <TabPanel className="panel">
                                 <div className="panel-wrapper">
                                     <div className="date-header">
-                                        Jumat, 15 Maret 2019
+                                        Jumat, 14 Maret 2019
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            lunchFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
@@ -596,7 +626,7 @@ function Home()  {
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data, i)=> {
+                                            dinnerFood.map((data, i)=> {
                                                 return(
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>

@@ -46,6 +46,7 @@ const AddressModal: FC<AddressModalProps> = (props) => {
                     ))
                 :
                 address
+                    // eslint-disable-next-line
                     .filter(item => {
                         if (!search) return true
                         if (item.location_name.toLowerCase().includes(search) || item.location_street.toLowerCase().includes(search)) {
