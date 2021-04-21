@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.scss";
-import { Provider } from "react-redux";
-import branch from "branch-sdk";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./router/Router";
 import { routes } from "./router/config";

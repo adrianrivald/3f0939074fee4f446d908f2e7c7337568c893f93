@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faAngleDown, faArrowLeft, faChevronRight, faPlus, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faChevronRight, faPlus, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import './Home.scss';
@@ -7,9 +7,9 @@ import { useLocation } from 'react-router-dom';
 import { productListData, productListDataProps } from '../../helpers/productListData';
 import RatingDisplay from '../../components/ratingDisplay/RatingDisplay';
 import { priceToRupiah } from '../../helpers/priceToRupiah';
-import { CalculateCart } from '../../models/CartModel';
-import { locationListDataProps } from '../../helpers/locationListData';
+import { locationListData, locationListDataProps } from '../../helpers/locationListData';
 import AddressModal from '../../components/addressModal/AddressModal';
+import backArrow from '../../assets/images/back-arrow.svg'
 
 interface dateProps {
     changeTabs: number | undefined;
@@ -22,19 +22,18 @@ function Home()  {
     const changeTab =
       location.state && (location.state as dateProps).changeTabs;
     console.log('tab', changeTab);
-    const [selectedMenu, setSelectedMenu] = useState(
-      // eslint-disable-next-line
-      changeTab != undefined ? changeTab : 0
-    );
     const [toggleCart, setToggleCart] = useState(false)
     const [toggleAddress, setToggleAddress] = useState(false)
     const [amount, setAmount] = useState(0);
+    const [search, setSearch] = useState('');
     const [price, setPrice] = useState(0);
+    const [selectedPlace, setSelectedPlace] = useState('')
 
 
     useEffect(()=> {
         setProduct(productListData);
-
+        setAddress(locationListData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const cartModal = () => {
@@ -57,6 +56,21 @@ function Home()  {
         )
     }
 
+    const onChange = (e: any) => {
+        e.preventDefault();
+        const { value } = e.target;
+        setSearch(value)
+        if (value.length > 3) {
+
+        }
+        console.log(value,'value')
+    }
+
+    const selectPlace = (place: string) => {
+        setSelectedPlace(place)
+        setToggleAddress(false);
+    }
+
     const popupHandler = () => {
         setToggleCart(!toggleCart);
     }
@@ -67,7 +81,6 @@ function Home()  {
     }
 
     const addToCart = (count:number, addPrice:number)=> {
-
         setAmount(amount + count)
         setPrice(price + addPrice)
         setToggleCart(true)
@@ -84,11 +97,15 @@ function Home()  {
                     
             </meta>
             <div className="header">
-                <FontAwesomeIcon icon={faArrowLeft} style={{fontSize: '30px'}} />
+                <img src={backArrow} onClick={showAddress} alt="back"/>
                 <div className="address-choice">
                     <h2>Alamat Pengantaran</h2>
-                    <span className="address">Tokopedia Tower</span>
-                    <FontAwesomeIcon onClick={showAddress} icon={faAngleDown} style={{marginLeft: '10px', color:'red', cursor:'pointer'}} />
+                    <span className="address" onClick={showAddress}>
+                        {
+                            selectedPlace === '' ? 'Tokopedia Tower' : selectedPlace
+                        }
+                    <FontAwesomeIcon icon={faAngleDown} style={{marginLeft: '10px', color:'#f9234a', cursor:'pointer'}} />
+                    </span>
                 </div>
             </div>
             <div className="date-container">
@@ -144,8 +161,8 @@ function Home()  {
                                 </div>
                             </div>
                         </Tab>
-                        <Tab selectedClassName='selected' className='menu'>
-                            <div className="date-item">
+                        <Tab selectedClassName='selected' className='menu' disabled>
+                            <div className="date-item disabled">
                                 <div className="day">
                                     SAB
                                 </div>
@@ -154,8 +171,8 @@ function Home()  {
                                 </div>
                             </div>
                         </Tab>
-                        <Tab selectedClassName='selected' className='menu'>
-                            <div className="date-item">
+                        <Tab selectedClassName='selected' className='menu' disabled>
+                            <div className="date-item disabled">
                                 <div className="day">
                                     MIN
                                 </div>
@@ -214,8 +231,8 @@ function Home()  {
                                 </div>
                             </div>
                         </Tab>
-                        <Tab selectedClassName='selected' className='menu'>
-                            <div className="date-item">
+                        <Tab selectedClassName='selected' className='menu' disabled>
+                            <div className="date-item disabled">
                                 <div className="day">
                                     SAB
                                 </div>
@@ -224,8 +241,8 @@ function Home()  {
                                 </div>
                             </div>
                         </Tab>
-                        <Tab selectedClassName='selected' className='menu'>
-                            <div className="date-item">
+                        <Tab selectedClassName='selected' className='menu' disabled>
+                            <div className="date-item disabled">
                                 <div className="day">
                                     MIN
                                 </div>
@@ -248,7 +265,7 @@ function Home()  {
                             <TabPanel className="panel">
                                 <div className="panel-wrapper">
                                     <div className="date-header">
-                                        Kamis, 13 Maret 2019
+                                        Senin, 10 Maret 2019
                                     </div>
                                     <div className="product-list">
                                         {
@@ -257,7 +274,7 @@ function Home()  {
                                                     <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
                                                         <div className="mid">
-                                                            <RatingDisplay rating={data.rating} color="red" withNumber={true} starStyles={starStyle} />
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
                                                             <span className="title">{data.food_name}</span>
                                                             <div className="by">
                                                                 by {data.product_brand} . {data.vendor}
@@ -277,25 +294,25 @@ function Home()  {
                                 </div>
                             </TabPanel>
                             <TabPanel className="panel">
-                                {/* <div className="panel-wrapper">
+                                <div className="panel-wrapper">
                                     <div className="date-header">
-                                        Kamis, 13 Maret 2019
+                                        Senin, 10 Maret 2019
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data)=> {
+                                            product.map((data, i)=> {
                                                 return(
-                                                    <div className="item-list">
+                                                    <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
                                                         <div className="mid">
-                                                            <RatingDisplay rating={data.rating} color="red" withNumber={true} starStyles={starStyle} />
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
                                                             <span className="title">{data.food_name}</span>
                                                             <div className="by">
                                                                 by {data.product_brand} . {data.vendor}
                                                             </div>
                                                             <div className="price">
                                                                 <span className="price-tag">{priceToRupiah(data.price)}</span>
-                                                                <button className="button">
+                                                                <button className="button" onClick={()=>addToCart(1, data.price)}>
                                                                     Add <FontAwesomeIcon icon={faPlus}/>
                                                                 </button>
                                                             </div>
@@ -305,17 +322,11 @@ function Home()  {
                                             })
                                         }
                                     </div>
-                                </div> */}
+                                </div>
                             </TabPanel>
                         </Tabs>
                     </TabPanel>
-                    <TabPanel>
-                        x
-                    </TabPanel>
-                    <TabPanel>
-                        x
-                    </TabPanel>
-                    <TabPanel>
+                    <TabPanel className="tab-content">
                         <Tabs>
                             <TabList className="time-bar">
                                 <Tab selectedClassName='selected' className='menu'>
@@ -326,25 +337,25 @@ function Home()  {
                                 </Tab>
                             </TabList>
                             <TabPanel className="panel">
-                                {/* <div className="panel-wrapper">
+                                <div className="panel-wrapper">
                                     <div className="date-header">
-                                        Kamis, 13 Maret 2019
+                                        Selasa, 11 Maret 2019
                                     </div>
                                     <div className="product-list">
                                         {
-                                            product.map((data)=> {
+                                            product.map((data, i)=> {
                                                 return(
-                                                    <div className="item-list">
+                                                    <div className="item-list" key={i}>
                                                         <img className="image" src={data.product_image} alt="food-pic"/>
                                                         <div className="mid">
-                                                            <RatingDisplay rating={data.rating} color="red" withNumber={true} starStyles={starStyle} />
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
                                                             <span className="title">{data.food_name}</span>
                                                             <div className="by">
                                                                 by {data.product_brand} . {data.vendor}
                                                             </div>
                                                             <div className="price">
                                                                 <span className="price-tag">{priceToRupiah(data.price)}</span>
-                                                                <button className="button" onClick={()=>addToCart(1)}>
+                                                                <button className="button" onClick={()=>addToCart(1, data.price)}>
                                                                     Add <FontAwesomeIcon icon={faPlus}/>
                                                                 </button>
                                                             </div>
@@ -354,16 +365,262 @@ function Home()  {
                                             })
                                         }
                                     </div>
-                                </div> */}
+                                </div>
                             </TabPanel>
                             <TabPanel className="panel">
-
+                                <div className="panel-wrapper">
+                                    <div className="date-header">
+                                        Selasa, 11 Maret 2019
+                                    </div>
+                                    <div className="product-list">
+                                        {
+                                            product.map((data, i)=> {
+                                                return(
+                                                    <div className="item-list" key={i}>
+                                                        <img className="image" src={data.product_image} alt="food-pic"/>
+                                                        <div className="mid">
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
+                                                            <span className="title">{data.food_name}</span>
+                                                            <div className="by">
+                                                                by {data.product_brand} . {data.vendor}
+                                                            </div>
+                                                            <div className="price">
+                                                                <span className="price-tag">{priceToRupiah(data.price)}</span>
+                                                                <button className="button" onClick={()=>addToCart(1, data.price)}>
+                                                                    Add <FontAwesomeIcon icon={faPlus}/>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
                             </TabPanel>
-
                         </Tabs>
                     </TabPanel>
-                    <TabPanel>
-                        x
+                    <TabPanel className="tab-content">
+                        <Tabs>
+                            <TabList className="time-bar">
+                                <Tab selectedClassName='selected' className='menu'>
+                                    Lunch
+                                </Tab>
+                                <Tab selectedClassName='selected' className='menu'>
+                                    Dinner
+                                </Tab>
+                            </TabList>
+                            <TabPanel className="panel">
+                                <div className="panel-wrapper">
+                                    <div className="date-header">
+                                        Rabu, 12 Maret 2019
+                                    </div>
+                                    <div className="product-list">
+                                        {
+                                            product.map((data, i)=> {
+                                                return(
+                                                    <div className="item-list" key={i}>
+                                                        <img className="image" src={data.product_image} alt="food-pic"/>
+                                                        <div className="mid">
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
+                                                            <span className="title">{data.food_name}</span>
+                                                            <div className="by">
+                                                                by {data.product_brand} . {data.vendor}
+                                                            </div>
+                                                            <div className="price">
+                                                                <span className="price-tag">{priceToRupiah(data.price)}</span>
+                                                                <button className="button" onClick={()=>addToCart(1, data.price)}>
+                                                                    Add <FontAwesomeIcon icon={faPlus}/>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </TabPanel>
+                            <TabPanel className="panel">
+                                <div className="panel-wrapper">
+                                    <div className="date-header">
+                                        Rabu, 12 Maret 2019
+                                    </div>
+                                    <div className="product-list">
+                                        {
+                                            product.map((data, i)=> {
+                                                return(
+                                                    <div className="item-list" key={i}>
+                                                        <img className="image" src={data.product_image} alt="food-pic"/>
+                                                        <div className="mid">
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
+                                                            <span className="title">{data.food_name}</span>
+                                                            <div className="by">
+                                                                by {data.product_brand} . {data.vendor}
+                                                            </div>
+                                                            <div className="price">
+                                                                <span className="price-tag">{priceToRupiah(data.price)}</span>
+                                                                <button className="button" onClick={()=>addToCart(1, data.price)}>
+                                                                    Add <FontAwesomeIcon icon={faPlus}/>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </TabPanel>
+                        </Tabs>
+                    </TabPanel>
+                    <TabPanel className="tab-content">
+                        <Tabs>
+                            <TabList className="time-bar">
+                                <Tab selectedClassName='selected' className='menu'>
+                                    Lunch
+                                </Tab>
+                                <Tab selectedClassName='selected' className='menu'>
+                                    Dinner
+                                </Tab>
+                            </TabList>
+                            <TabPanel className="panel">
+                                <div className="panel-wrapper">
+                                    <div className="date-header">
+                                        Kamis, 13 Maret 2019
+                                    </div>
+                                    <div className="product-list">
+                                        {
+                                            product.map((data, i)=> {
+                                                return(
+                                                    <div className="item-list" key={i}>
+                                                        <img className="image" src={data.product_image} alt="food-pic"/>
+                                                        <div className="mid">
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
+                                                            <span className="title">{data.food_name}</span>
+                                                            <div className="by">
+                                                                by {data.product_brand} . {data.vendor}
+                                                            </div>
+                                                            <div className="price">
+                                                                <span className="price-tag">{priceToRupiah(data.price)}</span>
+                                                                <button className="button" onClick={()=>addToCart(1, data.price)}>
+                                                                    Add <FontAwesomeIcon icon={faPlus}/>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </TabPanel>
+                            <TabPanel className="panel">
+                                <div className="panel-wrapper">
+                                    <div className="date-header">
+                                        Kamis, 13 Maret 2019
+                                    </div>
+                                    <div className="product-list">
+                                        {
+                                            product.map((data, i)=> {
+                                                return(
+                                                    <div className="item-list" key={i}>
+                                                        <img className="image" src={data.product_image} alt="food-pic"/>
+                                                        <div className="mid">
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
+                                                            <span className="title">{data.food_name}</span>
+                                                            <div className="by">
+                                                                by {data.product_brand} . {data.vendor}
+                                                            </div>
+                                                            <div className="price">
+                                                                <span className="price-tag">{priceToRupiah(data.price)}</span>
+                                                                <button className="button" onClick={()=>addToCart(1, data.price)}>
+                                                                    Add <FontAwesomeIcon icon={faPlus}/>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </TabPanel>
+                        </Tabs>
+                    </TabPanel>
+                    <TabPanel className="tab-content">
+                        <Tabs>
+                            <TabList className="time-bar">
+                                <Tab selectedClassName='selected' className='menu'>
+                                    Lunch
+                                </Tab>
+                                <Tab selectedClassName='selected' className='menu'>
+                                    Dinner
+                                </Tab>
+                            </TabList>
+                            <TabPanel className="panel">
+                                <div className="panel-wrapper">
+                                    <div className="date-header">
+                                        Jumat, 15 Maret 2019
+                                    </div>
+                                    <div className="product-list">
+                                        {
+                                            product.map((data, i)=> {
+                                                return(
+                                                    <div className="item-list" key={i}>
+                                                        <img className="image" src={data.product_image} alt="food-pic"/>
+                                                        <div className="mid">
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
+                                                            <span className="title">{data.food_name}</span>
+                                                            <div className="by">
+                                                                by {data.product_brand} . {data.vendor}
+                                                            </div>
+                                                            <div className="price">
+                                                                <span className="price-tag">{priceToRupiah(data.price)}</span>
+                                                                <button className="button" onClick={()=>addToCart(1, data.price)}>
+                                                                    Add <FontAwesomeIcon icon={faPlus}/>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </TabPanel>
+                            <TabPanel className="panel">
+                                <div className="panel-wrapper">
+                                    <div className="date-header">
+                                        Jumat, 15 Maret 2019
+                                    </div>
+                                    <div className="product-list">
+                                        {
+                                            product.map((data, i)=> {
+                                                return(
+                                                    <div className="item-list" key={i}>
+                                                        <img className="image" src={data.product_image} alt="food-pic"/>
+                                                        <div className="mid">
+                                                            <RatingDisplay rating={data.rating} withNumber={true} starStyles={starStyle} />
+                                                            <span className="title">{data.food_name}</span>
+                                                            <div className="by">
+                                                                by {data.product_brand} . {data.vendor}
+                                                            </div>
+                                                            <div className="price">
+                                                                <span className="price-tag">{priceToRupiah(data.price)}</span>
+                                                                <button className="button" onClick={()=>addToCart(1, data.price)}>
+                                                                    Add <FontAwesomeIcon icon={faPlus}/>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </TabPanel>
+                        </Tabs>
                     </TabPanel>
                     <TabPanel>
                         x
@@ -376,12 +633,15 @@ function Home()  {
                     </TabPanel>
                 </Tabs>
             </div>
-                <AddressModal
-                    popupHandler={showAddress}
-                    action={toggleAddress}
-                    address={address}
-                />
-                {cartModal() }
+            <AddressModal
+                popupHandler={showAddress}
+                action={toggleAddress}
+                address={address}
+                search={search}
+                onChange={onChange}
+                selectPlace={selectPlace}
+            />
+            {cartModal() }
         </div>
     );
 

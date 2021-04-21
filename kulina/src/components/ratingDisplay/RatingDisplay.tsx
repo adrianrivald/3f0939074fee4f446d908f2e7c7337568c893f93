@@ -1,19 +1,17 @@
 import React, { CSSProperties } from 'react';
 import './RatingDisplay.scss';
 import starActiveIcon from '../../assets/images/star-active.png';
-import yellowStarActiveIcon from '../../../assets/images/yellow-star-active.png';
 import starIcon from '../../assets/images/star.png';
 
 interface RatingDisplayProps {
     rating: number | string;
-    color: 'red';
     withNumber: boolean;
     starStyles?: CSSProperties;
     fontStyles?: CSSProperties;
 }
 
 const RatingDisplay = (Props: RatingDisplayProps) => {
-  const { rating, color, withNumber, starStyles, fontStyles } = Props;
+  const { rating, withNumber, starStyles, fontStyles } = Props;
 
   return (
     <div className='rating'>

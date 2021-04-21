@@ -3,7 +3,7 @@ export type locationListDataProps = {
     location_street: string;
   };
   
-  export const productListData: locationListDataProps[] = [
+  export const locationListData: locationListDataProps[] = [
     {
       location_name: "Kulina",
       location_street: "Jalan Tulodong Atas 28, Senayan, Kebayoran Baru"

@@ -1,6 +1,6 @@
 
 @mixin text {
-    font-family: roboto;
+    font-family: 'open-sans';
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
@@ -13,10 +13,10 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    // height: 100%;
-    z-index: 10;
+    height: 100%;
+    z-index: 11;
     display: block;
-    visibility: hidden;
+    visibility: hidden;    
 
     /* show */
     &.show {
@@ -27,7 +27,7 @@
         opacity: 0.5;
         }
 
-        & .popup-box {
+        & .address-box {
         transform: translateY(0%);
         }
     }
@@ -36,6 +36,8 @@
     /* background */
     .background {
         height: 100%;
+        background-color: black;
+        opacity: 0;
         transition: all 0.5s ease-in-out;
     }
     /* background */
@@ -52,39 +54,70 @@
         border-bottom: 2px solid #d8d8d8;
         height: auto;
         transform: translateY(200%);
+        border-radius: 5px;
         transition: all 0.5s ease-in-out;
 
         @media only screen and (min-width: 360px) {
         width: 100%;
         }
 
-        @media only screen and (min-width: 480px) {
-        width: 480px;
+        @media only screen and (min-width: 375px) {
+        width: 375px;
         }
 
         /* popup-box-top */
         .address-box-top {
-        padding: 15px;
-        border-radius: 5px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #ad2b2b;
+            padding: 15px;
+            display: block;
+            border-radius: 5px;
+            height: 450px;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            overflow-y: scroll;
+            background-color: #ffffff;
 
         /* popup-box-title */
-        .address-box-title {
-            .title {
-            @include text();
-            font-size: 14px;
-            font-weight: bold;
+            .address-box-title {
+                .title {
+                    @include text();
+                    font-size: 14px;
+                    font-weight: bold;
+                }
             }
-
-            .subtitle {
-            @include text();
-            font-size: 12px;
+            .address-modal-text {
+                width: 75%;
+                .text {
+                    font-size: 20px;
+                }
             }
-        }
+            .address-list {
+                .list-item{
+                    cursor: pointer;
+                    margin-top: 20px;
+                    border-bottom: 1px solid #d8d8d8;
+                    display: flex;
+                    margin-left: 10px;
+                    img {
+                        margin-right: 10px;
+                    }
+                    .list-name {
+                        h1 {
+                            font-size: 16px
+                        }
+                        p {
+                            font-size: 12px
+                        }
+                    }
+                    &:hover{
+                        opacity: 0.7;
+                    }
+                    &:active{
+                        background-color: #d8d8d8;
+                        border-radius: 3px
+                    }
+                }
+            }
         /* popup-box-title */
 
         /* popup-close */
@@ -94,8 +127,13 @@
             text-align: right;
             text-decoration: underline;
             cursor: pointer;
+            color: black;
         }
         /* popup-close */
+        }
+
+        .address-box-top::-webkit-scrollbar {
+            display: none;
         }
         /* popup-box-top */
 

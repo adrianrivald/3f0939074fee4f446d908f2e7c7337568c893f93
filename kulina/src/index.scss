@@ -4,21 +4,21 @@ html {
 }
 
 @font-face {
-  font-family: 'roboto';
-  src: local('roboto'),
-    url(./assets/fonts/Roboto-Regular.ttf) format('truetype');
+  font-family: 'open-sans';
+  src: local('open-sans'),
+    url(./assets/fonts/OpenSans-Regular.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: 'roboto-medium';
-  src: local('roboto-medium'),
-    url(./assets/fonts/Roboto-Medium.ttf) format('truetype');
+  font-family: 'open-sans-medium';
+  src: local('open-sans-medium'),
+    url(./assets/fonts/OpenSans-SemiBold.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: 'roboto-bold';
-  src: local('roboto-bold'),
-    url(./assets/fonts/Roboto-Bold.ttf) format('truetype');
+  font-family: 'open-sans-bold';
+  src: local('open-sans-bold'),
+    url(./assets/fonts/OpenSans-Bold.ttf) format('truetype');
 }
 
 .link {
@@ -27,7 +27,7 @@ html {
 
 body {
   margin: auto;
-  font-family: 'roboto';
+  font-family: 'open-sans';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fff;
@@ -46,8 +46,8 @@ body {
     width: 100%;
   }
 
-  @media only screen and (min-width: 480px) {
-    width: 480px;
+  @media only screen and (min-width: 375px) {
+    width: 375px;
   }
 }
 
